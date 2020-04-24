@@ -9,27 +9,35 @@
 
 .item {
     padding: 20px;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+    border-top: 1px solid #1A4065;
+    border-right: 2px solid #1A4065;
+    border-left: 2px solid #1A4065;
     border-bottom: 0px;
     display: inline-block;
     width: 70%;
+    color: #1E51A4;
+    font-weight: bold;
+    font-family: 'Play', sans-serif;
 }
 
 .wheel-row-content:first-child .item {
     border-radius: 8px 8px 0 0;
 }
 
+.wheel-row-content:first-child .item {
+    border-top: 2px solid #1A4065;
+}
+
 .wheel-row-content:last-child .item {
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid #1A4065;
     border-radius: 0 0 8px 8px;
 }
 
-.item.winner {
-    background-color: green;
+.item.odd {
+    background-color: #E2EDF9;
 }
 
-.item.even {
-    background-color: #ccc;
+.item.winner {
+    background-color: rgba(30,80,162,0.7);
+    color: white;
 }

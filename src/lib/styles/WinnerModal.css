@@ -1,0 +1,32 @@
+.btn-primary.winner-modal-close {
+  width: 15%;
+  font-size: 12pt;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+.btn-primary.winner-modal-close:focus,
+.btn-primary.winner-modal-close:active {
+  outline: none !important;
+  outline-offset: none !important;
+  box-shadow: none;
+}
+
+.btn-primary.winner-modal-close {
+  background-color: #1A4065 !important;
+  border: 0;
+  color: white
+}
+
+.btn-primary.winner-modal-close:hover {
+  background-color: rgba(30,80,162,0.7) !important;
+  color: black;
+}
+
+.modal-content {
+    font-family: 'Lato',sans-serif;
+}
+
+.modal-body h4 {
+    font-family: 'Play', sans-serif;
+}

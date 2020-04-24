@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Board from './Board'
 import SpinButton from './SpinButton'
 import WinnerArea from './WinnerArea'
+import WinnerModal from './WinnerModal'
 import { items, winningRow } from '../helpers/constants'
-import { WheelStatus, Results } from '../helpers/types'
+import { WheelStatus, Results, IItems } from '../helpers/types'
 
 import '../lib/styles/App.css';
-
 
 const App = () => {
   const defaultWheelStatus: WheelStatus = {
@@ -22,13 +22,20 @@ const App = () => {
     winners: []
   }
 
-  const [listItems, setListItems] = useState(items)
+  const getItemsByRows = (): IItems[] => items.map((i: string, idx: number) => {
+    return {
+      name: i,
+      position: idx + 1
+    }
+  })
+
+  const [listItems, setListItems] = useState(getItemsByRows())
   const [wheelStatus, setWheelStatus] = useState(defaultWheelStatus)
   const [results, setResults] = useState(defaultResults)
 
-  const getItemsByRows = () => items.map((i: string, idx: number) => {
-    return [i, idx + 1]
-  })
+  const [winner, setWinner] = useState("")
+
+  const [modalShow, setModalShow] = useState(false);
 
   const _winningRow = (winningRow < 1 || winningRow > items.length) ? 1 : winningRow
   const winningPosition = _winningRow - 1
@@ -39,21 +46,23 @@ const App = () => {
     if (wheelStatus.isSpinning) {
       const timer = setInterval(updateWheel, wheelStatus.intervalSpeed)
 
-      if (wheelStatus.intervalSpeed < 1000) {
+      if (wheelStatus.intervalSpeed < 925) {
         return () => clearInterval(timer)
       }
       clearInterval(timer)
       setWheelStatus(defaultWheelStatus)
-      const winner = listItems[winningPosition]
+      const _winner = listItems[winningPosition].name
       const allWinners = results.winners
-      allWinners.push(winner)
+      allWinners.push(_winner)
       const numberOfSpins = results.numberOfSpins + 1
+      setWinner(_winner)
       setResults({numberOfSpins, winners: allWinners})
+      showWinnerModal()
     }
-  }, [listItems, results])
+  }, [listItems, results, winner, modalShow])
 
-  const getSpinTimerValue = () => (Math.random() * 1000) + 1000
-  const getSpinSlowdownRate = () => (Math.random() * 0.1) + 0.1
+  const getSpinTimerValue = () => (Math.random() * 3000) + 5000
+  const getSpinSlowdownRate = () => (Math.random() * 0.15) + 0.05
 
   const beginSpin = () => {
     const spinTimerValue = getSpinTimerValue()
@@ -79,7 +88,7 @@ const App = () => {
   const updateWheel = () => {
     let itemsCopy = listItems.slice()
     let lastElement = itemsCopy.pop()
-    lastElement = lastElement ? lastElement : ""
+    lastElement = lastElement ? lastElement : {name: "", position: -1}
     itemsCopy.unshift(lastElement)
     if (wheelStatus.isSlowingDown) {
       console.log(`Beginning to slow down at rate: ${wheelStatus.slowDownRate}`)
@@ -90,11 +99,23 @@ const App = () => {
     setListItems(itemsCopy)
   }
 
+  console.log(itemsByRows)
+
+  const showWinnerModal = () => setTimeout(() => setModalShow(true), 2000)
+
   return (
     <div className="App">
-      <div className="selector-wrapper">
-        <Board items={listItems} wheelStatus={wheelStatus} results={results} winningRow={_winningRow} spin={beginSpin} itemsByRow={itemsByRows}/>
+      <div className="app-header">
+        <h1>Vantage Point Trivia!</h1>
       </div>
+      <div className="selector-wrapper">
+        <Board items={listItems} wheelStatus={wheelStatus} results={results} winningRow={_winningRow} spin={beginSpin} />
+      </div>
+      <WinnerModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        winner={winner}
+      />
     </div>
   )
 }

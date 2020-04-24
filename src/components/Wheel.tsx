@@ -1,40 +1,42 @@
 import React from 'react'
 
-import '../lib/styles/Wheel.css'
-import Ticker from './Ticker'
+import WheelRow from './WheelRow'
 
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import '../lib/styles/Wheel.css'
+import { wheelLength } from '../helpers/constants'
+import { IItems } from '../helpers/types'
+
 
 interface WheelProps {
-    items: string[]
+    items: IItems[]
     isSpinning: boolean
     numberOfSpins: number
     winningRow: number
-    itemsByRow: (string | number)[][]
 }
 
-const Wheel = ({ items, isSpinning, numberOfSpins, winningRow, itemsByRow }: WheelProps) => {
-    const getItemClassName = (idx: number, rowNumber: (string | number)) => {
-        let classNameList = idx === winningRow - 1 && !isSpinning && numberOfSpins > 0 ? `item winner` : 'item'
-        classNameList += parseInt(rowNumber.toString()) % 2 === 0 ? ' even' : ' odd'
-
-        return classNameList
+const Wheel = ({ items, isSpinning, numberOfSpins, winningRow }: WheelProps) => {
+    const getWheel = () => {
+        let wheelContent = []
+        for(let w = 0; w < wheelLength; w++ ) {
+            wheelContent.push(<WheelRow isSpinning={isSpinning} numberOfSpins={numberOfSpins} winningRow={winningRow} rowNum={items[w].position} currentIndex={w} rowContent={items[w].name}/>)
+        }
+        console.log(wheelContent)
+        return wheelContent
     }
 
-    const displayTicker = (row: number) => row === winningRow - 1
-        ? <Ticker icon={faCaretRight} />
-        : null
+
+        // {items.map((i, idx) => (
+        //     <div className="wheel-row-content">
+        //         <div className="ticker-holder">
+        //             {displayTicker(idx)}
+        //         </div>
+        //         <div key={idx} className={getItemClassName(idx, itemsByRow[idx][1])}>{i}</div>
+        //     </div>
+        // ))}
 
     return (
         <div className="wheel">
-            {items.map((i, idx) => (
-                <div className="wheel-row-content">
-                    <div className="ticker-holder">
-                        {displayTicker(idx)}
-                    </div>
-                    <div key={idx} className={getItemClassName(idx, itemsByRow[idx][1])}>{i}</div>
-                </div>
-            ))}
+           {getWheel().map(row => row)}
         </div>
     )
 }

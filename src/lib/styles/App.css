@@ -1,5 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Play:wght@700&display=swap');
+
 .App {
   text-align: center;
+  font-family: 'Lato',sans-serif !important;
+}
+
+.app-header {
+  padding: 20px;
+  font-family: 'Marck Script', cursive;
 }
 
 .selector-wrapper {
@@ -14,8 +22,12 @@
   border-radius: 8px;
 }
 
+.other-area {
+  float: right;
+  width: 25%;
+}
+
 .winner-section {
-  display: inline-block;
   margin: 0 auto;
   padding: 20px;
   font-size: 14pt;

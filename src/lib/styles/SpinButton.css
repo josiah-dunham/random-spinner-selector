@@ -1,11 +1,28 @@
-.spin-wheel {
-    width: 20%;
-    height: 30px;
-    font-size: 14pt;
-    border-radius: 8px;
-    cursor: pointer;
+.btn-primary.spin-wheel {
+  width: 50%;
+  font-size: 14pt;
+  border-radius: 0px;
+  cursor: pointer;
 }
 
-.spin-wheel:focus {
-    outline: none;
-  }
+.btn-primary.spin-wheel:focus {
+  outline: none !important;
+  outline-offset: none !important;
+  box-shadow: none;
+}
+
+.btn-primary.spin-wheel:active {
+  outline: none !important;
+  outline-offset: none !important;
+  box-shadow: none;
+}
+
+.btn-primary.spin-wheel {
+  background-color: #ce7a12 !important;
+  border: 0;
+}
+
+.btn-primary.spin-wheel:hover {
+  background-color: #ce7a12 !important;
+  color: black;
+}

@@ -1,31 +1,45 @@
-import React from 'react'
+import React from "react"
 
-import { WheelStatus, Results } from '../helpers/types'
+import { WheelStatus, Results, IItems } from "../helpers/types"
 
-import Wheel from './Wheel'
-import WinnerArea from './WinnerArea'
-import SpinButton from './SpinButton'
+import Wheel from "./Wheel"
+import WinnerArea from "./WinnerArea"
+import SpinButton from "./SpinButton"
+import ItemInput from './ItemInput'
 
 interface BoardProps {
-    items: string[]
-    wheelStatus: WheelStatus,
-    results: Results
-    winningRow: number
-    spin: () => void
-    itemsByRow: (string | number)[][]
+  items: IItems[]
+  wheelStatus: WheelStatus
+  results: Results
+  winningRow: number
+  spin: () => void
 }
 
-const Board = ({ items, wheelStatus, results, winningRow, spin, itemsByRow}: BoardProps) => {
-    const { isSpinning } = wheelStatus
-    const { numberOfSpins } = results
+const Board = ({
+  items,
+  wheelStatus,
+  results,
+  winningRow,
+  spin,
+}: BoardProps) => {
+  const { isSpinning } = wheelStatus
+  const { numberOfSpins } = results
 
-    return (
-        <div className="board">
-            <Wheel items={items} isSpinning={isSpinning} numberOfSpins={numberOfSpins} winningRow={winningRow} itemsByRow={itemsByRow}/>
-            <WinnerArea wheelStatus={wheelStatus} results={results} />
-            <SpinButton spin={spin}/>
-        </div>
-    )
+  return (
+    <div className="board">
+      <Wheel
+        items={items}
+        isSpinning={isSpinning}
+        numberOfSpins={numberOfSpins}
+        winningRow={winningRow}
+      />
+      <div className="other-area">
+        <WinnerArea wheelStatus={wheelStatus} results={results} />
+        <SpinButton spin={spin} />
+        <ItemInput />
+      </div>
+    </div>
+  )
 }
 
 export default Board

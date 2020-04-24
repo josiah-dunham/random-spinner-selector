@@ -1,0 +1,45 @@
+.scroll-up {
+ height: 50px;	
+ overflow: hidden;
+ position: relative;
+ background: yellow;
+ color: orange;
+ border: 1px solid orange;
+}
+.selector-wrapper div.items {
+ width: 100%;
+ height: 100%;
+ margin: 0;
+ line-height: 50px;
+ text-align: center;
+ /* Starting position */
+ -moz-transform:translateY(100%);
+ -webkit-transform:translateY(100%);	
+ transform:translateY(100%);
+ /* Apply animation to this element */	
+ -moz-animation: scroll-up 5s linear infinite;
+ -webkit-animation: scroll-up 5s linear infinite;
+ animation: scroll-up 5s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes scroll-up {
+    from { -webkit-transform: rotateX(0deg);  }
+    to   { -webkit-transform: rotateX(36deg); }
+}
+@-webkit-keyframes scroll-up {
+    from { -moz-transform: rotateX(0deg);  }
+    to   { -moz-transform: rotateX(36deg); }
+}
+@keyframes scroll-up {
+ from   { 
+ -moz-transform: rotateX(0deg); /* Browser bug fix */
+ -webkit-transform: rotateX(0deg); /* Browser bug fix */
+ transform: rotateX(0deg); 		
+ }
+ to { 
+ -moz-transform: rotateX(36deg); /* Browser bug fix */
+ -webkit-transform: rotateX(36deg); /* Browser bug fix */
+ transform: rotateX(36deg); 
+ }
+}
+
