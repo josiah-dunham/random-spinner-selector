@@ -1,119 +1,99 @@
 import React, { useState, useEffect } from 'react';
+
+import Board from './Board'
+import SpinButton from './SpinButton'
+import WinnerArea from './WinnerArea'
+import { items, winningRow } from '../helpers/constants'
+import { WheelStatus, Results } from '../helpers/types'
+
 import '../lib/styles/App.css';
 
-import { items } from '../helpers/constants'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
 const App = () => {
+  const defaultWheelStatus: WheelStatus = {
+    isSpinning: false,
+    isSlowingDown: false,
+    slowDownRate: 1.0,
+    intervalSpeed: 100
+  }
+
+  const defaultResults: Results = {
+    numberOfSpins: 0,
+    winners: []
+  }
+
   const [listItems, setListItems] = useState(items)
-  const [isSpinning, setIsSpinning] = useState(false)
-  const [isSlowingDown, setIsSlowingDown] = useState(false)
-  const [slowDownRate, setSlowDownRate] = useState(1)
-  const [intervalSpeed, setIntervalSpeed] = useState(100)
-  const [winner, setWinner] = useState("")
-  const [numberOfSpins, setNumberOfSpins] = useState(0)
+  const [wheelStatus, setWheelStatus] = useState(defaultWheelStatus)
+  const [results, setResults] = useState(defaultResults)
 
+  const getItemsByRows = () => items.map((i: string, idx: number) => {
+    return [i, idx + 1]
+  })
+
+  const _winningRow = (winningRow < 1 || winningRow > items.length) ? 1 : winningRow
+  const winningPosition = _winningRow - 1
+
+  const itemsByRows = getItemsByRows()
+  
   useEffect(() => {
-    if(isSpinning) {
-      const timer = setInterval(updateWheel, intervalSpeed)
+    if (wheelStatus.isSpinning) {
+      const timer = setInterval(updateWheel, wheelStatus.intervalSpeed)
 
-      if(intervalSpeed < 1000) {
+      if (wheelStatus.intervalSpeed < 1000) {
         return () => clearInterval(timer)
       }
       clearInterval(timer)
-      setIsSpinning(false)
-      setIsSlowingDown(false)
-      setIntervalSpeed(100)
-      setWinner(listItems[4])
-      setNumberOfSpins(numberOfSpins + 1)
+      setWheelStatus(defaultWheelStatus)
+      const winner = listItems[winningPosition]
+      const allWinners = results.winners
+      allWinners.push(winner)
+      const numberOfSpins = results.numberOfSpins + 1
+      setResults({numberOfSpins, winners: allWinners})
     }
-  }, [listItems])
+  }, [listItems, results])
 
   const getSpinTimerValue = () => (Math.random() * 1000) + 1000
   const getSpinSlowdownRate = () => (Math.random() * 0.1) + 0.1
-  // useEffect(() => {
-  //   const timer = setInterval(updateWheel, 100)
-  //   return () => clearInterval(timer)
-  // }, [listItems])
 
   const beginSpin = () => {
     const spinTimerValue = getSpinTimerValue()
     const spinSlowdownRate = getSpinSlowdownRate()
-    setSlowDownRate(spinSlowdownRate)
-
-    console.log(`Spinning for ${spinTimerValue} ms`)
 
     setTimeout(() => {
       console.log("Begin slow down...")
-      setIsSlowingDown(true)
+      setWheelStatus({...wheelStatus, isSpinning: true, isSlowingDown: true, slowDownRate: spinSlowdownRate})
     }, spinTimerValue)
 
-    setIsSpinning(true)
+    setWheelStatus({...wheelStatus, isSpinning: true})
     updateWheel()
   }
 
   const toggleSpin = () => {
-    const switchSpin = !isSpinning
-    if(switchSpin) {
+    const switchSpin = !wheelStatus.isSpinning
+    if (switchSpin) {
       updateWheel()
     }
-    setIsSpinning(switchSpin)
+    setWheelStatus({...wheelStatus, isSpinning: switchSpin})
   }
 
   const updateWheel = () => {
-      let itemsCopy = listItems.slice()
-      let lastElement = itemsCopy.pop()
-      lastElement = lastElement ? lastElement : ""
-      itemsCopy.unshift(lastElement)
-      if(isSlowingDown) {
-        console.log(`Beginning to slow down at rate: ${slowDownRate}`)
-        let _intervalSpeed = (intervalSpeed * slowDownRate) + intervalSpeed
-        setIntervalSpeed(_intervalSpeed)
-      }
-      setListItems(itemsCopy)
-  }
-
-  const getItemClassName = (idx: number) => (idx === 4 && !isSpinning && numberOfSpins > 0) ? `item winner` : 'item'
-
-  const getStatus = () => {
-    let status
-    if(isSpinning && !isSlowingDown) {
-      status = "Wheel spinning"
+    let itemsCopy = listItems.slice()
+    let lastElement = itemsCopy.pop()
+    lastElement = lastElement ? lastElement : ""
+    itemsCopy.unshift(lastElement)
+    if (wheelStatus.isSlowingDown) {
+      console.log(`Beginning to slow down at rate: ${wheelStatus.slowDownRate}`)
+      let _intervalSpeed = (wheelStatus.intervalSpeed * wheelStatus.slowDownRate) + wheelStatus.intervalSpeed
+      setWheelStatus({...wheelStatus, intervalSpeed: _intervalSpeed})
     }
-    else if(isSlowingDown) {
-      status = "Slowing down..."
-    }
-    else {
-      if(numberOfSpins === 0) {
-        status = "Spin wheel to select winner!"
-      }
-      else {
-        status = `Winner: ${winner}!`
-      }
-    }
-
-    return status
+    
+    setListItems(itemsCopy)
   }
 
   return (
     <div className="App">
       <div className="selector-wrapper">
-        <div className="items-wrapper">
-          <div className="ticker">
-            <FontAwesomeIcon size="2x" icon={faCaretRight} />
-          </div>
-          <div className="items">
-            {listItems.map((i, idx) => (
-              <div key={idx} className={getItemClassName(idx)}>{i}</div>
-            ))}
-          </div>
-          <div className="winner-section">
-            {getStatus()}
-          </div>
-        </div>
-        <button onClick={() => beginSpin()} className="spin-wheel">Spin!</button>
+        <Board items={listItems} wheelStatus={wheelStatus} results={results} winningRow={_winningRow} spin={beginSpin} itemsByRow={itemsByRows}/>
       </div>
     </div>
   )

@@ -1,0 +1,15 @@
+._ticker {
+    display: inline-block;
+    position: absolute;
+    left: 35%;
+    top: 254px;
+    /* border: 1px solid red; */
+}
+
+.ticker-holder {
+    vertical-align: middle;
+    padding: 7px 0;
+    display: inline-block;
+    width: 3%;
+    margin-right: 20px;
+}

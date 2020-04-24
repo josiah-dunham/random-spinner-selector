@@ -1,0 +1,11 @@
+.spin-wheel {
+    width: 20%;
+    height: 30px;
+    font-size: 14pt;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.spin-wheel:focus {
+    outline: none;
+  }

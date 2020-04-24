@@ -10,3 +10,5 @@ export const items = [
     "Steve Heidengren",
     "Justine Heidengren"
 ]
+
+export const winningRow = 5

@@ -1,0 +1,35 @@
+.wheel {
+    display: inline-block;
+    width: 75%;
+    float: left
+}
+
+.wheel-row-content {
+}
+
+.item {
+    padding: 20px;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 0px;
+    display: inline-block;
+    width: 70%;
+}
+
+.wheel-row-content:first-child .item {
+    border-radius: 8px 8px 0 0;
+}
+
+.wheel-row-content:last-child .item {
+    border-bottom: 1px solid black;
+    border-radius: 0 0 8px 8px;
+}
+
+.item.winner {
+    background-color: green;
+}
+
+.item.even {
+    background-color: #ccc;
+}

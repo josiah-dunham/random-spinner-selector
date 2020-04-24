@@ -5,74 +5,18 @@
 .selector-wrapper {
 }
 
-.items-wrapper {
-  border: 1px solid black;
-  width: 50%;
+.board {
+  width: 90%;
   margin: 0 auto;
   position: relative;
-}
-
-.ticker {
+  padding: 20px 0;
   display: inline-block;
-  position: absolute;
-  left: 35%;
-  top: 254px;
-  /* border: 1px solid red; */
-}
-
-.items {
-  display: inline-block;
-}
-
-.item {
-  padding: 20px;
-  border: 1px solid black;
-}
-
-.item.winner {
-  background-color: green;
-}
-
-.ticker.pos-1 {
-  top: 14px;
-}
-
-.ticker.pos-2 {
-  top: 74px;
-}
-
-.ticker.pos-3 {
-  top: 134px;
-}
-
-.ticker.pos-4 {
-  top: 194px;
-}
-
-.ticker.pos-5 {
-  top: 254px;
-}
-
-.ticker.pos-6 {
-  top: 314px;
-}
-
-.ticker.pos-7 {
-  top: 374px;
-}
-
-.ticker.pos-8 {
-  top: 434px;
-}
-
-.ticker.pos-9 {
-  top: 494px;
-}
-
-.ticker.pos-10 {
-  top: 554px;
+  border-radius: 8px;
 }
 
 .winner-section {
-  padding: 10px;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 14pt;
 }
