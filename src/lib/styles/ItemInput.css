@@ -1,3 +1,32 @@
 .item-input {
     padding: 20px;
 }
+
+div.clear-names {
+    padding: 10px;
+}
+
+.btn-primary.clear-names-btn {
+    width: 40%;
+    font-size: 12pt;
+    border-radius: 0px;
+    cursor: pointer;
+  }
+  
+  .btn-primary.clear-names-btn:focus,
+  .btn-primary.clear-names-btn:active {
+    outline: none !important;
+    outline-offset: none !important;
+    box-shadow: none;
+  }
+  
+  .btn-primary.clear-names-btn {
+    background-color: #1A4065 !important;
+    border: 0;
+    color: white
+  }
+  
+  .btn-primary.clear-names-btn:hover {
+    background-color: rgba(30,80,162,0.7) !important;
+    color: black;
+  }

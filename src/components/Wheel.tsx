@@ -3,7 +3,7 @@ import React from 'react'
 import WheelRow from './WheelRow'
 
 import '../lib/styles/Wheel.css'
-import { wheelLength } from '../helpers/constants'
+import { maxWheelLength } from '../helpers/constants'
 import { IItems } from '../helpers/types'
 
 
@@ -17,10 +17,10 @@ interface WheelProps {
 const Wheel = ({ items, isSpinning, numberOfSpins, winningRow }: WheelProps) => {
     const getWheel = () => {
         let wheelContent = []
-        for(let w = 0; w < wheelLength; w++ ) {
+        const totalWheelLength = items.length < maxWheelLength ? items.length : maxWheelLength
+        for(let w = 0; w < totalWheelLength; w++ ) {
             wheelContent.push(<WheelRow isSpinning={isSpinning} numberOfSpins={numberOfSpins} winningRow={winningRow} rowNum={items[w].position} currentIndex={w} rowContent={items[w].name}/>)
         }
-        console.log(wheelContent)
         return wheelContent
     }
 

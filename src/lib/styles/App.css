@@ -10,6 +10,10 @@
   font-family: 'Marck Script', cursive;
 }
 
+.app-header h1 {
+  font-size: 3.5rem !important;
+}
+
 .selector-wrapper {
 }
 
@@ -29,6 +33,6 @@
 
 .winner-section {
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   font-size: 14pt;
 }

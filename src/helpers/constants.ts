@@ -20,10 +20,12 @@ export const items = [
 ]
 
 export const winningRow = 5
-export const wheelLength = 10
+export const maxWheelLength = 10
 
 export const modalContent = {
     title: "We have a winner...",
     bodyHeader: "Congratulations, {winner-name}!",
     bodyContent: "You have won a gift card to the local small business of your choice! We will be in contact with you soon. Thank you to everyone who played!"
 }
+
+export const localStorageKey = "allItems"

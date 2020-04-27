@@ -13,6 +13,8 @@ interface BoardProps {
   results: Results
   winningRow: number
   spin: () => void
+  addNames: (e: any) => void
+  clearAllNames: () => void
 }
 
 const Board = ({
@@ -21,6 +23,8 @@ const Board = ({
   results,
   winningRow,
   spin,
+  addNames,
+  clearAllNames
 }: BoardProps) => {
   const { isSpinning } = wheelStatus
   const { numberOfSpins } = results
@@ -36,7 +40,7 @@ const Board = ({
       <div className="other-area">
         <WinnerArea wheelStatus={wheelStatus} results={results} />
         <SpinButton spin={spin} />
-        <ItemInput />
+        <ItemInput addNames={addNames} items={items} clearAllNames={clearAllNames} />
       </div>
     </div>
   )
